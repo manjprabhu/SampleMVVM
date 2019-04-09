@@ -5,6 +5,34 @@ import com.google.gson.annotations.SerializedName;
 
 public class Item {
 
+    @Expose
+    @SerializedName("owner")
+    private Owner owner;
+
+    @Expose
+    @SerializedName("is_accepted")
+    private boolean isAccepted;
+
+    @Expose
+    @SerializedName("score")
+    private Integer score;
+
+    @Expose
+    @SerializedName("last_activity_date")
+    private Integer lastActivityDate;
+
+    @Expose
+    @SerializedName("creation_date")
+    private Integer creationDate;
+
+    @Expose
+    @SerializedName("answer_id")
+    private Integer answerId;
+
+    @Expose
+    @SerializedName("question_id")
+    private Integer questionId;
+
     public Owner getOwner() {
         return owner;
     }
@@ -61,33 +89,7 @@ public class Item {
         this.questionId = questionId;
     }
 
-    @Expose
-    @SerializedName("owner")
-    private Owner owner;
 
-    @Expose
-    @SerializedName("is_accepted")
-    private boolean isAccepted;
-
-    @Expose
-    @SerializedName("score")
-    private Integer score;
-
-    @Expose
-    @SerializedName("last_activity_date")
-    private Integer lastActivityDate;
-
-    @Expose
-    @SerializedName("creation_date")
-    private Integer creationDate;
-
-    @Expose
-    @SerializedName("answer_id")
-    private Integer answerId;
-
-    @Expose
-    @SerializedName("question_id")
-    private Integer questionId;
 
 
 
