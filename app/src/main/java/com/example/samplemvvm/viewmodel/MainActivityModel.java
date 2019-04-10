@@ -1,5 +1,6 @@
 package com.example.samplemvvm.viewmodel;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
@@ -22,6 +23,8 @@ public class MainActivityModel extends ViewModel {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 Log.v(TAG,"retrofit response model success");
+
+
             }
 
             @Override
@@ -29,7 +32,6 @@ public class MainActivityModel extends ViewModel {
                 Log.v(TAG,"retrofit response model failure-->"+t.toString());
             }
         });
-
     }
 
 

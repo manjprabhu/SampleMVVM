@@ -2,53 +2,79 @@ package com.example.samplemvvm.view;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewAnimationUtils;
 
 import com.example.samplemvvm.R;
+import com.example.samplemvvm.adapters.ResponseRecycleAdapter;
 import com.example.samplemvvm.data.RetrofitClient;
 import com.example.samplemvvm.data.RetrofitRequest;
+import com.example.samplemvvm.model.Item;
 import com.example.samplemvvm.model.Response;
-import com.example.samplemvvm.viewmodel.MainActivityModel;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
-    MainActivityModel mainActivityModel;
+    private final String TAG = MainActivity.class.getSimpleName();
+
+    private ResponseRecycleAdapter mAdapter;
+    private RecyclerView mRecyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mainActivityModel = ViewModelProviders.of(this).get(MainActivityModel.class);
+        setContentView(R.layout.activity_main );
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        mainActivityModel.initRequest();
+        initViews();
+        initRequest();
     }
 
+    private void initViews() {
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
+        mAdapter = new ResponseRecycleAdapter(new ArrayList<Item>(0));
 
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setHasFixedSize(true);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        mRecyclerView.addItemDecoration(itemDecoration);
+
+    }
+
+    public void initRequest() {
+
+        RetrofitRequest request = RetrofitClient.getRetrofitClient().create(RetrofitRequest.class);
+
+        request.getResponse().enqueue(new Callback<Response>() {
+            @Override
+            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                Log.v("manju","retrofit response model success-->"+response.body().getList().get(1).getOwner().getDisplayName());
+                mAdapter.updateResponse(response.body().getList());
+            }
+
+            @Override
+            public void onFailure(Call<Response> call, Throwable t) {
+                Log.v(TAG,"retrofit response model failure-->"+t.toString());
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
