@@ -24,7 +24,6 @@ public class MainActivityModel extends ViewModel {
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 Log.v(TAG,"retrofit response model success");
 
-
             }
 
             @Override

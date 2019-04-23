@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
-        mAdapter = new ResponseRecycleAdapter(new ArrayList<Item>(0));
+        mAdapter = new ResponseRecycleAdapter(new ArrayList<Item>(0),this);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         request.getResponse().enqueue(new Callback<Response>() {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                Log.v("manju","retrofit response model success-->"+response.body().getList().get(1).getOwner().getDisplayName());
+                Log.v(TAG,"retrofit response model success-->"+response.body().getList().get(1).getOwner().getDisplayName());
                 mAdapter.updateResponse(response.body().getList());
             }
 
