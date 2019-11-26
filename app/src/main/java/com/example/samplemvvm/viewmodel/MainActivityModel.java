@@ -15,6 +15,7 @@ public class MainActivityModel extends ViewModel {
 
     private final String TAG = MainActivityModel.class.getSimpleName();
 
+
     public void initRequest() {
 
         RetrofitRequest request = RetrofitClient.getRetrofitClient().create(RetrofitRequest.class);
@@ -23,7 +24,6 @@ public class MainActivityModel extends ViewModel {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 Log.v(TAG,"retrofit response model success");
-
             }
 
             @Override

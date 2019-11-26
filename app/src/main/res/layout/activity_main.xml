@@ -21,8 +21,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_list"
         android:name=".view.MainActivity"
@@ -31,7 +29,6 @@
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:context=".view.MainActivity"/>
 

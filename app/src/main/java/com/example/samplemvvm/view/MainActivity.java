@@ -1,19 +1,11 @@
 package com.example.samplemvvm.view;
 
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -55,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(itemDecoration);
-
     }
 
     public void initRequest() {
@@ -65,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
         request.getResponse().enqueue(new Callback<Response>() {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                Log.v(TAG,"retrofit response model success-->"+response.body().getList().get(1).getOwner().getDisplayName());
-                mAdapter.updateResponse(response.body().getList());
+                if(response.isSuccessful()) {
+                    Log.v(TAG,"retrofit response model success-->"+response.body().getList().get(1).getOwner().getDisplayName());
+                    mAdapter.updateResponse(response.body().getList());
+                }
             }
 
             @Override
