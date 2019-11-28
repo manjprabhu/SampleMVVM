@@ -49,9 +49,7 @@ public class ResponseRecycleAdapter extends RecyclerView.Adapter<ResponseRecycle
     public void onBindViewHolder(ResponseRecycleAdapter.ViewHolder holder, int position) {
         Item item = mItems.get(position);
         holder.textView.setText(item.getOwner().getDisplayName());
-
         Glide.with(mContext).load(item.getOwner().getProfileImage()).error(Glide.with(holder.imageView).load(R.drawable.ic_launcher_background)).into(holder.imageView);
-
     }
 
     @Override

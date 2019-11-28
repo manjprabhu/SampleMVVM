@@ -1,6 +1,10 @@
 package com.example.samplemvvm.view;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,11 +14,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.samplemvvm.R;
+import com.example.samplemvvm.adapters.ResponseAdapter;
 import com.example.samplemvvm.adapters.ResponseRecycleAdapter;
 import com.example.samplemvvm.data.RetrofitClient;
 import com.example.samplemvvm.data.RetrofitRequest;
 import com.example.samplemvvm.model.Item;
 import com.example.samplemvvm.model.Response;
+import com.example.samplemvvm.viewmodel.MainActivityModel;
 
 import java.util.ArrayList;
 
@@ -26,24 +32,44 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
 
     private ResponseRecycleAdapter mAdapter;
+    private ResponseAdapter responseAdapter;
     private RecyclerView mRecyclerView;
+    private MainActivityModel activityModel;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main );
-
         initViews();
-        initRequest();
+
+//        initRequest();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        activityModel = ViewModelProviders.of(MainActivity.this).get(MainActivityModel.class);
+
+        activityModel.getData().observe(this, new Observer<PagedList<Item>>() {
+            @Override
+            public void onChanged(@Nullable PagedList<Item> items) {
+                Log.v(TAG,"OnChanged:"+items.size());
+                responseAdapter.submitList(items);
+            }
+        });
     }
 
     private void initViews() {
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
         mAdapter = new ResponseRecycleAdapter(new ArrayList<Item>(0),this);
 
+        responseAdapter = new ResponseAdapter(this);
+        mRecyclerView.setAdapter(responseAdapter);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mAdapter);
+//        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(itemDecoration);
