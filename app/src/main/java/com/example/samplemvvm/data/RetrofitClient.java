@@ -54,8 +54,6 @@ public class RetrofitClient {
         @Override
         public Response intercept(Chain chain) throws IOException {
 
-            Log.v(TAG,"intercept");
-
             Request original = chain.request();
 
             Response response = chain.proceed(original);

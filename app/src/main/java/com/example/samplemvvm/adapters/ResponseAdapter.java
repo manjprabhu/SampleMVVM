@@ -52,7 +52,6 @@ public class ResponseAdapter extends PagedListAdapter<Item, ResponseAdapter.Item
         }
     };
 
-
     class ItemViewHolder  extends RecyclerView.ViewHolder {
 
         private ImageView iv;
@@ -60,8 +59,8 @@ public class ResponseAdapter extends PagedListAdapter<Item, ResponseAdapter.Item
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv = (TextView) itemView.findViewById(R.id.tv_title);
-            iv =(ImageView) itemView.findViewById(R.id.iv_logo);
+            tv = itemView.findViewById(R.id.tv_title);
+            iv = itemView.findViewById(R.id.iv_logo);
         }
     }
 }

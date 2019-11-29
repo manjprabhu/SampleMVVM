@@ -37,7 +37,6 @@ public class OwnerDataSource extends PageKeyedDataSource<Integer, Item> {
 
     @Override
     public void loadBefore(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, Item> callback) {
-
     }
 
     @Override
@@ -51,11 +50,10 @@ public class OwnerDataSource extends PageKeyedDataSource<Integer, Item> {
                 if(response.isSuccessful()) {
 
                     Integer key =  response.body().isHasMore() ? params.key + 1 : null;
-                    Log.v(TAG,"retrofit response loadafter model success-->"+response.body().getList().size());
+                    Log.v(TAG,"retrofit response load after model success-->"+response.body().getList().size());
                     callback.onResult(response.body().getList(), key);
                 }
             }
-
             @Override
             public void onFailure(Call<Response> call, Throwable t) {
                 Log.v(TAG,"retrofit response model failure-->"+t.toString());

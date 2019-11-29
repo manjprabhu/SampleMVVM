@@ -6,11 +6,8 @@ import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
 import android.util.Log;
 
-import com.example.samplemvvm.data.OwnerDataSource;
 import com.example.samplemvvm.data.FeedDataSourceFactory;
 import com.example.samplemvvm.model.Item;
-
-import java.util.concurrent.Executor;
 
 public class MainActivityModel extends ViewModel {
 

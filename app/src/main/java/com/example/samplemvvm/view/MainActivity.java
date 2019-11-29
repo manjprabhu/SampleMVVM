@@ -36,13 +36,11 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private MainActivityModel activityModel;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main );
         initViews();
-
 //        initRequest();
     }
 
