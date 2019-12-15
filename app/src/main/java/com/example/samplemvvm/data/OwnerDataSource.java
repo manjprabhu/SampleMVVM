@@ -27,7 +27,8 @@ public class OwnerDataSource extends PageKeyedDataSource<Integer, Item> {
         Log.v(TAG,"loadInitial");
         mRepository.getData(1,params.requestedLoadSize)
                 .subscribeOn(Schedulers.io())
-                .subscribe(result -> callback.onResult(result.getList(),null,8));
+                .subscribe(result -> callback.onResult(result.getList(),null,8),
+                           throwable -> callback.onResult(null,null,8));
 
         //working code
         /*RetrofitRequest request = RetrofitClient.getRetrofitClient().create(RetrofitRequest.class);

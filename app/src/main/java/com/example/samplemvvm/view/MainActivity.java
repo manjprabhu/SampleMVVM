@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.samplemvvm.R;
 import com.example.samplemvvm.adapters.ResponseAdapter;
@@ -24,11 +25,7 @@ import com.example.samplemvvm.viewmodel.MainActivityModel;
 
 import java.util.ArrayList;
 
-import io.reactivex.SingleObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -62,7 +59,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable PagedList<Item> items) {
                 Log.v(TAG,"OnChanged:"+items.size());
-                responseAdapter.submitList(items);
+                if(items !=null ) {
+                    responseAdapter.submitList(items);
+                } else {
+                    Toast.makeText(MainActivity.this,"Error while loading data",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }
