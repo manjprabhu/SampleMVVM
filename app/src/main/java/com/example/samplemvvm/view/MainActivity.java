@@ -24,6 +24,11 @@ import com.example.samplemvvm.viewmodel.MainActivityModel;
 
 import java.util.ArrayList;
 
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -35,13 +40,16 @@ public class MainActivity extends AppCompatActivity {
     private ResponseAdapter responseAdapter;
     private RecyclerView mRecyclerView;
     private MainActivityModel activityModel;
+    private CompositeDisposable disposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main );
+        disposable = new CompositeDisposable();
         initViews();
 //        initRequest();
+//        initRxRequest();
     }
 
     @Override
@@ -73,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(itemDecoration);
     }
 
-    public void initRequest() {
+    private void initRequest() {
 
         RetrofitRequest request = RetrofitClient.getRetrofitClient().create(RetrofitRequest.class);
 
@@ -113,5 +121,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
     }
 }

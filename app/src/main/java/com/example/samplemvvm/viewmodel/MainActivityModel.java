@@ -8,16 +8,20 @@ import android.util.Log;
 
 import com.example.samplemvvm.data.FeedDataSourceFactory;
 import com.example.samplemvvm.model.Item;
+import com.example.samplemvvm.repository.Repository;
 
 public class MainActivityModel extends ViewModel {
 
     private final String TAG = MainActivityModel.class.getSimpleName();
     private LiveData<PagedList<Item>> pagedList;
+    private Repository repository;
 
     public MainActivityModel() {
         Log.v(TAG,"MainActivityModel");
 
-        FeedDataSourceFactory factory = new FeedDataSourceFactory();
+        repository = Repository.getInstace();
+
+        FeedDataSourceFactory factory = new FeedDataSourceFactory(repository);
         PagedList.Config config =
                 (new PagedList.Config.Builder())
                         .setEnablePlaceholders(false)
